@@ -120,7 +120,7 @@ def build_report(events, hours, skipped_own):
     top_commands = Counter(e.get('input') for e in commands if e.get('input'))
 
     lines = []
-    lines.append(f'# Cowrie Report — letzte {hours}h')
+    lines.append(f'# Cowrie Report — {datetime.now().strftime("%Y-%m-%d")}')
     lines.append(f'_Erstellt: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}_')
     if skipped_own:
         lines.append(f'_Hinweis: {skipped_own} Events von eigenen IPs (Red-Team-Lab) wurden ausgeschlossen._')
@@ -166,7 +166,7 @@ def build_report(events, hours, skipped_own):
         rows = [[d.get('url', '-'), d.get('outfile', '-')] for d in downloads[:20]]
         lines.append(md_table(['URL', 'Lokale Datei'], rows))
 
-    return '\n'.join(lines)
+    return '\n'.join(lines), connections, top_ips
 
 
 def main():
@@ -178,7 +178,7 @@ def main():
     own_nets = load_own_networks()
     since = datetime.now(timezone.utc) - timedelta(hours=args.hours)
     events, skipped = load_events(log_path, since, own_nets, args.include_own)
-    report = build_report(events, args.hours, skipped)
+    report, connections, top_ips = build_report(events, args.hours, skipped)
 
     if args.output:
         out = Path(args.output)
@@ -191,7 +191,3 @@ def main():
     print(f'\n-> Bericht gespeichert: {out}')
     if skipped:
         print(f'-> {skipped} Events von eigenen IPs wurden gefiltert.')
-
-
-if __name__ == '__main__':
-    main()
