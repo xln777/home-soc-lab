@@ -3,6 +3,9 @@
 **Datum:** 2026-05-16
 **Quelle:** Cowrie SSH-Honeypot
 **Analyst:** xln777
+**Bedrohung:** schneller Root-Credential-Scanner
+**English title:** Root wordlist burst from a cloud hosting network
+**English threat:** fast root credential scanner
 
 ## 1. Zusammenfassung
 

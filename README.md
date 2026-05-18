@@ -73,7 +73,12 @@ Für einzelne IPs erzeugt `scripts/case-study-evidence.py` eine strukturierte Ev
 
 Die Case Studies zeigen den Lern- und Analyseweg: Was war in den Logs sichtbar, welches Muster war auffällig, welche Hypothese entstand daraus und wie wurde sie mit externen Quellen geprüft.
 
-Der Index liegt in [`case-studies/README.md`](case-studies/README.md). Neue Analysen werden dort gepflegt, damit diese Hauptseite stabil bleibt.
+Der Index liegt hier:
+
+- Deutsch: [`case-studies/README.md`](case-studies/README.md)
+- Englisch: [`case-studies/README.en.md`](case-studies/README.en.md)
+
+Neue Analysen werden dort automatisch gepflegt, damit diese Hauptseite stabil bleibt.
 
 ## Sicherheit
 

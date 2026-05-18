@@ -71,7 +71,12 @@ For individual IPs, `scripts/case-study-evidence.py` generates a structured evid
 
 The case studies show the learning and analysis process: what was visible in the logs, which pattern stood out, what hypothesis came from it and how it was checked with external sources.
 
-The index is maintained in [`case-studies/README.md`](case-studies/README.md), so this main page stays stable as new analyses are added.
+The index is available here:
+
+- English: [`case-studies/README.en.md`](case-studies/README.en.md)
+- German: [`case-studies/README.md`](case-studies/README.md)
+
+New analyses are maintained there automatically, so this main page stays stable.
 
 ## Safety note
 

@@ -167,6 +167,22 @@ git push origin main
 ~/bin/soc-lab-autocommit.sh
 ```
 
+## Neue Case Study anlegen
+
+```bash
+python3 ~/home-soc-lab/scripts/new-case-study.py 107.189.23.209 \
+  --date 2026-05-16 \
+  --slug root-wordlist-burst \
+  --threat "schneller Root-Credential-Scanner"
+
+python3 ~/home-soc-lab/scripts/case-study-evidence.py 107.189.23.209 \
+  --date 2026-05-16 \
+  -o /tmp/evidence.md
+
+python3 ~/home-soc-lab/scripts/enrich.py 107.189.23.209
+python3 ~/home-soc-lab/scripts/update-case-study-index.py
+```
+
 ## Cron-Jobs
 
 ```bash

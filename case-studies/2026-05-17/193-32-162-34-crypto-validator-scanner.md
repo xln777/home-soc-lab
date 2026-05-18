@@ -3,6 +3,9 @@
 **Datum:** 2026-05-17 (Update: 2026-05-18)
 **Quelle:** Cowrie SSH-Honeypot auf meinem Hetzner-Server
 **Analyst:** xln777
+**Bedrohung:** Credential-Brute-Force gegen Blockchain-Validatoren
+**English title:** Crypto validator scanner from Romania
+**English threat:** credential brute force against blockchain validators
 
 ## 1. Zusammenfassung
 
