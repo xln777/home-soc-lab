@@ -1,0 +1,10 @@
+*.log
+*.pyc
+__pycache__/
+.env
+.secrets
+.DS_Store
+CLAUDE.md
+AGENTS.md
+STATUS.md
+scripts/own-ips.txt

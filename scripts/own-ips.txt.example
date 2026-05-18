@@ -1,0 +1,8 @@
+# Eigene IPs für Red-Team-Lab — diese werden vom Report ausgeschlossen.
+# Format: eine IP oder CIDR-Range pro Zeile. Kommentare mit #.
+#
+# Beispiele:
+# 78.94.123.45         # Home-IP (Telekom)
+# 78.94.0.0/16         # Ganzer Telekom-Range falls dynamische IP
+# 2003:abcd::/32       # IPv6-Präfix
+# 10.0.0.5             # VPN-Exit-IP
