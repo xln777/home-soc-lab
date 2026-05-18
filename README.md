@@ -71,8 +71,9 @@ Eigene Test-IP-Adressen werden über `scripts/own-ips.txt` gefiltert. Die Datei 
 
 Die Case Studies zeigen den Lern- und Analyseweg: Was war in den Logs sichtbar, welches Muster war auffällig, welche Hypothese entstand daraus und wie wurde sie mit externen Quellen geprüft.
 
-Aktueller Einstieg:
+Aktuelle Einstiege:
 
+- [`case-studies/2026-05-16-root-wordlist-burst.md`](case-studies/2026-05-16-root-wordlist-burst.md)
 - [`case-studies/2026-05-17-crypto-validator-scanner.md`](case-studies/2026-05-17-crypto-validator-scanner.md)
 
 ## Sicherheit

@@ -7,6 +7,7 @@ Hier liegen ausführlichere Auswertungen von Angriffen, die mir in den Tages-Rep
 | Datum | Titel | Bedrohung |
 |-------|-------|-----------|
 | 2026-05-17 | [Crypto-Validator-Scanner aus Rumänien](2026-05-17-crypto-validator-scanner.md) | Credential-Brute-Force gegen Blockchain-Validatoren |
+| 2026-05-16 | [Root-Wortlisten-Burst aus einem Cloud-Hosting-Netz](2026-05-16-root-wordlist-burst.md) | schneller Root-Credential-Scanner |
 
 ## Aufbau
 
