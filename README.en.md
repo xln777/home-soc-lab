@@ -69,10 +69,7 @@ Own test IPs can be filtered through `scripts/own-ips.txt`. The file is intentio
 
 The case studies show the learning and analysis process: what was visible in the logs, which pattern stood out, what hypothesis came from it and how it was checked with external sources.
 
-Current starting points:
-
-- [`case-studies/2026-05-16-root-wordlist-burst.md`](case-studies/2026-05-16-root-wordlist-burst.md)
-- [`case-studies/2026-05-17-crypto-validator-scanner.md`](case-studies/2026-05-17-crypto-validator-scanner.md)
+The index is maintained in [`case-studies/README.md`](case-studies/README.md), so this main page stays stable as new analyses are added.
 
 ## Safety note
 
