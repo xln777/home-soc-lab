@@ -195,13 +195,18 @@ sudo ss -tlnp
 ```bash
 IP=193.32.162.34
 
-# 1. Threat-Intel-Anreicherung
+# 1. Strukturierte Evidence aus Cowrie-Logs bauen
+python3 ~/home-soc-lab/scripts/case-study-evidence.py "$IP" \
+  --date 2026-05-16 \
+  -o /tmp/evidence.md
+
+# 2. Threat-Intel-Anreicherung
 python3 ~/home-soc-lab/scripts/enrich.py "$IP"
 
-# 2. Anzahl der Events
+# 3. Anzahl der Events roh prüfen
 grep -c "\"src_ip\": \"$IP\"" ~/cowrie/logs/cowrie.json*
 
-# 3. Username/Passwort-Kombinationen
+# 4. Username/Passwort-Kombinationen roh prüfen
 grep "\"src_ip\": \"$IP\"" ~/cowrie/logs/cowrie.json* \
   | grep login.failed \
   | python3 -c "
@@ -216,7 +221,7 @@ for line in sys.stdin:
         pass
 " | sort | uniq -c | sort -rn | head -20
 
-# 4. AbuseIPDB-Testlauf
+# 5. AbuseIPDB-Testlauf
 python3 ~/home-soc-lab/scripts/abuseipdb-reporter.py --dry-run
 ```
 

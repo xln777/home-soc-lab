@@ -23,7 +23,7 @@ I run an SSH honeypot, collect the logs and analyze them with Python scripts. Th
 
 | Path | Content |
 |------|---------|
-| `case-studies/` | manual deep dives into selected attacks |
+| `case-studies/` | manual deep dives into selected attacks, grouped by date |
 | `reports/` | daily reports generated from Cowrie logs |
 | `scripts/` | Python tools for reporting, AbuseIPDB and enrichment |
 | `CHEATSHEET.md` | operational commands for daily use |
@@ -51,6 +51,8 @@ Internet scanners
 - attempted malware downloads
 
 Own test IPs can be filtered through `scripts/own-ips.txt`. The file is intentionally ignored by Git.
+
+For individual IPs, `scripts/case-study-evidence.py` generates a structured evidence overview with time window, event types, client fingerprints, user/password combinations and example sessions.
 
 ## Threat intelligence
 

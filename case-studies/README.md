@@ -6,8 +6,8 @@ Hier liegen ausführlichere Auswertungen von Angriffen, die mir in den Tages-Rep
 
 | Datum | IP | Titel | Bedrohung |
 |-------|----|-------|-----------|
-| 2026-05-17 | `193.32.162.34` | [Crypto-Validator-Scanner aus Rumänien](2026-05-17-193-32-162-34-crypto-validator-scanner.md) | Credential-Brute-Force gegen Blockchain-Validatoren |
-| 2026-05-16 | `107.189.23.209` | [Root-Wortlisten-Burst aus einem Cloud-Hosting-Netz](2026-05-16-107-189-23-209-root-wordlist-burst.md) | schneller Root-Credential-Scanner |
+| 2026-05-17 | `193.32.162.34` | [Crypto-Validator-Scanner aus Rumänien](2026-05-17/193-32-162-34-crypto-validator-scanner.md) | Credential-Brute-Force gegen Blockchain-Validatoren |
+| 2026-05-16 | `107.189.23.209` | [Root-Wortlisten-Burst aus einem Cloud-Hosting-Netz](2026-05-16/107-189-23-209-root-wordlist-burst.md) | schneller Root-Credential-Scanner |
 
 ## Aufbau
 
@@ -26,6 +26,7 @@ Jede Case Study folgt grob diesen 9 Punkten. Sie sind als Leitfaden gedacht, nic
 ## Workflow
 
 1. Auffälligen Tag in `reports/` raussuchen
-2. `scripts/enrich.py <ip>` für den Threat-Intel-Kontext
-3. Die 9 Punkte als Gerüst nehmen und einen Bericht schreiben
-4. Committen, pushen, fertig
+2. `scripts/case-study-evidence.py <ip> --date YYYY-MM-DD` für strukturierte Cowrie-Evidence
+3. `scripts/enrich.py <ip>` für den Threat-Intel-Kontext
+4. Die 9 Punkte als Gerüst nehmen und einen Bericht schreiben
+5. Committen, pushen, fertig

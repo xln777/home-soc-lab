@@ -25,7 +25,7 @@ Ich betreibe einen SSH-Honeypot, sammle die Logs zentral und werte sie mit eigen
 
 | Pfad | Inhalt |
 |------|--------|
-| `case-studies/` | manuelle Tiefenanalysen einzelner Angriffe |
+| `case-studies/` | manuelle Tiefenanalysen einzelner Angriffe, sortiert nach Datum |
 | `reports/` | automatisch erzeugte Tagesreports aus Cowrie-Logs |
 | `scripts/` | Python-Tools für Reports, AbuseIPDB und Threat Intelligence |
 | `CHEATSHEET.md` | Alltagsbefehle für Betrieb und Analyse |
@@ -53,6 +53,8 @@ Internet-Scanner
 - versuchte Malware-Downloads
 
 Eigene Test-IP-Adressen werden über `scripts/own-ips.txt` gefiltert. Die Datei ist absichtlich gitignored.
+
+Für einzelne IPs erzeugt `scripts/case-study-evidence.py` eine strukturierte Evidence-Übersicht mit Zeitfenster, Event-Typen, Client-Fingerprints, User/Pass-Kombinationen und Beispiel-Sessions.
 
 ## Threat Intelligence
 
