@@ -1,5 +1,7 @@
 # home-soc-lab
 
+[English overview](README.en.md)
+
 Ein selbst betriebenes Mini-SOC auf einem Hetzner-VPS. Das Projekt verbindet Cowrie-Honeypot-Daten, Log-Auswertung, Threat-Intelligence-Anreicherung und kurze Incident-Writeups.
 
 Ziel ist nicht ein produktives Enterprise-SOC, sondern ein nachvollziehbares Portfolio-Projekt für Defensive Security: echte Angriffsdaten sammeln, auswerten und sauber dokumentieren.
