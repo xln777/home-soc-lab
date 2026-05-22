@@ -191,3 +191,7 @@ def main():
     print(f'\n-> Bericht gespeichert: {out}')
     if skipped:
         print(f'-> {skipped} Events von eigenen IPs wurden gefiltert.')
+
+
+if __name__ == "__main__":
+    main()
