@@ -23,6 +23,7 @@ import urllib.parse
 LOG_PATH = Path(os.environ.get("COWRIE_LOG_PATH", str(Path.home() / "cowrie/logs/cowrie.json")))
 CACHE_PATH = Path(os.environ.get("ABUSEIPDB_CACHE_PATH", str(Path.home() / ".abuseipdb-reported.json")))
 API_URL = "https://api.abuseipdb.com/api/v2/report"
+OWN_IPS_FILE = Path(__file__).parent / "own-ips.txt"
 
 
 def load_secrets_file():
@@ -72,6 +73,31 @@ def is_reportable_ip(ip):
         or parsed.is_reserved
         or parsed.is_unspecified
     )
+
+
+def load_own_networks():
+    nets = []
+    if not OWN_IPS_FILE.exists():
+        return nets
+    for line in OWN_IPS_FILE.read_text().splitlines():
+        if "#" in line:
+            line = line[:line.index("#")]
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            nets.append(ipaddress.ip_network(line, strict=False))
+        except ValueError:
+            print(f"WARN: ungültiger Eintrag in own-ips.txt: {line}")
+    return nets
+
+
+def is_own_ip(ip, own_nets):
+    try:
+        parsed = ipaddress.ip_address(ip)
+    except ValueError:
+        return False
+    return any(parsed in net for net in own_nets)
 
 
 def report_ip(ip, comment, dry_run=False):
@@ -125,6 +151,7 @@ def main():
 
     since = datetime.now(timezone.utc) - timedelta(hours=args.hours)
     cache = load_cache()
+    own_nets = load_own_networks()
     today = datetime.now().strftime("%Y-%m-%d")
 
     # IPs aus Cowrie-Log sammeln
@@ -153,6 +180,8 @@ def main():
 
             ip = ev.get("src_ip", "")
             if not is_reportable_ip(ip):
+                continue
+            if is_own_ip(ip, own_nets):
                 continue
 
             if ip not in ip_attempts:

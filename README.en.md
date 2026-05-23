@@ -50,7 +50,7 @@ Internet scanners
 - commands entered after login
 - attempted malware downloads
 
-Own test IPs can be filtered through `scripts/own-ips.txt`. The file is intentionally ignored by Git.
+Own test IPs can be filtered through `scripts/own-ips.txt`. The file is intentionally ignored by Git. Before commits, `python3 scripts/privacy-scan.py` checks whether a configured own IP accidentally appears in public reports or dashboard exports.
 
 For individual IPs, `scripts/case-study-evidence.py` generates a structured evidence overview with time window, event types, client fingerprints, user/password combinations and example sessions.
 

@@ -52,7 +52,7 @@ Internet-Scanner
 - eingegebene Befehle
 - versuchte Malware-Downloads
 
-Eigene Test-IP-Adressen werden über `scripts/own-ips.txt` gefiltert. Die Datei ist absichtlich gitignored.
+Eigene Test-IP-Adressen werden über `scripts/own-ips.txt` gefiltert. Die Datei ist absichtlich gitignored. Vor Commits kann `python3 scripts/privacy-scan.py` prüfen, ob eine dort eingetragene eigene IP versehentlich in öffentliche Reports oder Dashboard-Exports geraten ist.
 
 Für einzelne IPs erzeugt `scripts/case-study-evidence.py` eine strukturierte Evidence-Übersicht mit Zeitfenster, Event-Typen, Client-Fingerprints, User/Pass-Kombinationen und Beispiel-Sessions.
 

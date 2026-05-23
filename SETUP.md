@@ -130,6 +130,7 @@ Eigene IPs für Tests filtern:
 ```bash
 cp scripts/own-ips.txt.example scripts/own-ips.txt
 nano scripts/own-ips.txt
+python3 scripts/privacy-scan.py
 ```
 
 Funktionstest:
