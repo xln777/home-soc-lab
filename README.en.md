@@ -1,18 +1,19 @@
 # home-soc-lab
 
-A small self-hosted SOC lab built around a Cowrie SSH honeypot. The project combines real-world honeypot logs, Python-based reporting, threat-intelligence enrichment and short incident writeups.
+A small self-hosted SOC lab built around Cowrie and Conpot honeypots. The project combines real-world honeypot logs, OT/ICS telemetry, Python-based reporting, threat-intelligence enrichment and short incident writeups.
 
 The goal is not to present an enterprise SOC or production-grade security platform. It is a practical learning and portfolio project for defensive security: collecting real attack data, understanding logs, enriching indicators and documenting findings clearly.
 
 ## Short version
 
-I run an SSH honeypot, collect the logs and analyze them with Python scripts. The output is daily Markdown reports and selected case studies. The project helps me practice typical blue-team work: log analysis, IOC enrichment, threat-intelligence checks, reporting and defensive conclusions.
+I run an SSH honeypot and an OT/ICS honeypot, collect the logs and analyze them with Python scripts. The output is daily Markdown reports and selected case studies. The project helps me practice typical blue-team work: log analysis, IOC enrichment, threat-intelligence checks, reporting and defensive conclusions.
 
 ## What is included
 
 | Component | Purpose |
 |-----------|---------|
 | Cowrie SSH honeypot | collects real SSH scan and login attempts |
+| Conpot OT/ICS honeypot | simulates industrial protocols such as Modbus, S7Comm, SNMP and BACnet |
 | Grafana, Loki, Promtail | log aggregation and dashboards |
 | CrowdSec | automated decisions against suspicious IPs |
 | AbuseIPDB reporting | daily reporting of new attacker IPs |
@@ -24,7 +25,8 @@ I run an SSH honeypot, collect the logs and analyze them with Python scripts. Th
 | Path | Content |
 |------|---------|
 | `case-studies/` | manual deep dives into selected attacks, grouped by date |
-| `reports/` | daily reports generated from Cowrie logs |
+| `ot-case-studies/` | manual OT/ICS analyses from Conpot |
+| `reports/` | daily reports generated from Cowrie and Conpot logs |
 | `scripts/` | Python tools for reporting, AbuseIPDB and enrichment |
 | `CHEATSHEET.md` | operational commands for daily use |
 | `SETUP.md` | generic setup guide without private server details |
@@ -33,8 +35,8 @@ I run an SSH honeypot, collect the logs and analyze them with Python scripts. Th
 
 ```text
 Internet scanners
-  -> Cowrie SSH honeypot
-  -> JSON logs
+  -> Cowrie SSH honeypot + Conpot OT/ICS honeypot
+  -> JSON and text logs
   -> Python reports
   -> threat-intelligence enrichment
   -> reports and case studies
@@ -49,6 +51,7 @@ Internet scanners
 - successful honeypot logins
 - commands entered after login
 - attempted malware downloads
+- OT/Conpot section with protocols, public source IPs and example events
 
 Own test IPs can be filtered through `scripts/own-ips.txt`. The file is intentionally ignored by Git. Before commits, `python3 scripts/privacy-scan.py` checks whether a configured own IP accidentally appears in public reports or dashboard exports.
 
@@ -71,10 +74,11 @@ For individual IPs, `scripts/case-study-evidence.py` generates a structured evid
 
 The case studies show the learning and analysis process: what was visible in the logs, which pattern stood out, what hypothesis came from it and how it was checked with external sources.
 
-The index is available here:
+The indexes are available here:
 
 - English: [`case-studies/README.en.md`](case-studies/README.en.md)
 - German: [`case-studies/README.md`](case-studies/README.md)
+- OT/ICS: [`ot-case-studies/README.md`](ot-case-studies/README.md)
 
 New analyses are maintained there automatically, so this main page stays stable.
 
