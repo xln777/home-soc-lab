@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
 """
-Scan public files for configured private/lab IPs before committing.
+Scan public files for configured private/lab values before committing.
 
 Put sensitive values in scripts/own-ips.txt. That file is gitignored.
 The scanner fails if any configured exact IP appears in public project files.
 CIDR entries are used by runtime scripts, but are intentionally not expanded here.
+
+CI can pass additional literal denylist values through PRIVACY_SCAN_PATTERNS.
 """
 
 import ipaddress
+import os
 import sys
 from pathlib import Path
 
@@ -17,21 +20,27 @@ PUBLIC_SUFFIXES = {".md", ".json", ".csv", ".txt", ".yml", ".yaml"}
 SKIP_DIRS = {".git", "__pycache__"}
 
 
-def load_exact_ips():
-    ips = set()
-    if not OWN_IPS_FILE.exists():
-        return ips
-    for raw_line in OWN_IPS_FILE.read_text().splitlines():
-        line = raw_line.split("#", 1)[0].strip()
-        if not line:
-            continue
-        try:
-            net = ipaddress.ip_network(line, strict=False)
-        except ValueError:
-            continue
-        if net.num_addresses == 1:
-            ips.add(str(net.network_address))
-    return ips
+def load_patterns():
+    patterns = set()
+    if OWN_IPS_FILE.exists():
+        for raw_line in OWN_IPS_FILE.read_text().splitlines():
+            line = raw_line.split("#", 1)[0].strip()
+            if not line:
+                continue
+            try:
+                net = ipaddress.ip_network(line, strict=False)
+            except ValueError:
+                continue
+            if net.num_addresses == 1:
+                patterns.add(str(net.network_address))
+
+    env_value = os.environ.get("PRIVACY_SCAN_PATTERNS", "")
+    for item in env_value.replace(",", "\n").splitlines():
+        item = item.strip()
+        if item:
+            patterns.add(item)
+
+    return patterns
 
 
 def public_files():
@@ -47,22 +56,22 @@ def public_files():
 
 
 def main():
-    ips = load_exact_ips()
-    if not ips:
-        print("privacy-scan: keine exakten eigenen IPs in scripts/own-ips.txt gefunden")
+    patterns = load_patterns()
+    if not patterns:
+        print("privacy-scan: keine eigenen IPs oder CI-Pattern konfiguriert")
         return 0
 
     findings = []
     for path in public_files():
         text = path.read_text(errors="ignore")
-        for ip in ips:
-            if ip in text:
-                findings.append((path.relative_to(ROOT), ip))
+        for pattern in patterns:
+            if pattern in text:
+                findings.append((path.relative_to(ROOT), pattern))
 
     if findings:
-        print("privacy-scan: sensible IPs in öffentlichen Dateien gefunden:")
-        for rel_path, ip in findings:
-            print(f"  {rel_path}: {ip}")
+        print("privacy-scan: sensible Werte in öffentlichen Dateien gefunden:")
+        for rel_path, pattern in findings:
+            print(f"  {rel_path}: {pattern}")
         return 1
 
     print("privacy-scan: ok")
