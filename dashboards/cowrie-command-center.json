@@ -30,9 +30,8 @@
         "x": 0,
         "y": 0
       },
-      "id": 1,
-      "panels": [],
-      "title": "Lagebild",
+      "id": 1001,
+      "title": "Lagebild (Zeitraum oben rechts waehlbar)",
       "type": "row"
     },
     {
@@ -93,7 +92,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "loki"
+            "uid": "ffkrjj7xqfwg0b"
           },
           "expr": "sum(count_over_time({job=\"cowrie\"} | json | eventid =~ \"cowrie.session.connect|cowrie.login.*|cowrie.command.input\" [$__range]))",
           "queryType": "instant",
@@ -161,7 +160,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "loki"
+            "uid": "ffkrjj7xqfwg0b"
           },
           "expr": "sum(count_over_time({job=\"cowrie\"} | json | eventid = \"cowrie.login.failed\" [$__range]))",
           "queryType": "instant",
@@ -229,7 +228,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "loki"
+            "uid": "ffkrjj7xqfwg0b"
           },
           "expr": "sum(count_over_time({job=\"cowrie\"} | json | eventid = \"cowrie.command.input\" [$__range]))",
           "queryType": "instant",
@@ -297,15 +296,27 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "loki"
+            "uid": "ffkrjj7xqfwg0b"
           },
           "expr": "count(sum by (geoip_country_name) (count_over_time({job=\"cowrie\", geoip_country_name=~\".+\"} | json | eventid =~ \"cowrie.session.connect|cowrie.login.*|cowrie.command.input\" [$__range])))",
           "queryType": "instant",
           "refId": "A"
         }
       ],
-      "title": "Herkunftsländer",
+      "title": "Herkunftslaender",
       "type": "stat"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 5
+      },
+      "id": 1002,
+      "title": "Angriffsverlauf",
+      "type": "row"
     },
     {
       "datasource": {
@@ -367,7 +378,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 5
+        "y": 6
       },
       "id": 6,
       "options": {
@@ -435,11 +446,10 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 13
+        "y": 14
       },
-      "id": 7,
-      "panels": [],
-      "title": "GeoIP-Herkunft",
+      "id": 1003,
+      "title": "Herkunft (GeoIP)",
       "type": "row"
     },
     {
@@ -476,7 +486,7 @@
         "h": 12,
         "w": 12,
         "x": 0,
-        "y": 14
+        "y": 15
       },
       "id": 8,
       "options": {
@@ -602,10 +612,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 6,
-        "w": 12,
+        "h": 12,
+        "w": 6,
         "x": 12,
-        "y": 14
+        "y": 15
       },
       "id": 9,
       "options": {
@@ -633,6 +643,7 @@
             "uid": "loki"
           },
           "expr": "topk(10, sum by (geoip_country_name) (count_over_time({job=\"cowrie\", geoip_country_name=~\".+\"} | json | eventid =~ \"cowrie.session.connect|cowrie.login.*|cowrie.command.input\" [$__range])))",
+          "format": "table",
           "legendFormat": "{{geoip_country_name}}",
           "queryType": "instant",
           "refId": "A"
@@ -657,7 +668,7 @@
             "renameByName": {
               "Value": "Events",
               "Value #A": "Events",
-              "geoip_country_name": "Country"
+              "geoip_country_name": "Land"
             }
           }
         }
@@ -696,10 +707,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 6,
-        "w": 12,
-        "x": 12,
-        "y": 20
+        "h": 12,
+        "w": 6,
+        "x": 18,
+        "y": 15
       },
       "id": 10,
       "options": {
@@ -722,6 +733,7 @@
             "uid": "loki"
           },
           "expr": "topk(10, sum by (geoip_city_name, geoip_country_name) (count_over_time({job=\"cowrie\", geoip_city_name=~\".+\"} | json | eventid =~ \"cowrie.session.connect|cowrie.login.*\" [$__range])))",
+          "format": "table",
           "legendFormat": "{{geoip_city_name}}, {{geoip_country_name}}",
           "queryType": "instant",
           "refId": "A"
@@ -746,8 +758,8 @@
             "renameByName": {
               "Value": "Events",
               "Value #A": "Events",
-              "geoip_city_name": "City",
-              "geoip_country_name": "Country"
+              "geoip_city_name": "Stadt",
+              "geoip_country_name": "Land"
             }
           }
         }
@@ -760,11 +772,10 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 26
+        "y": 27
       },
-      "id": 11,
-      "panels": [],
-      "title": "Angreifer-Verhalten",
+      "id": 1004,
+      "title": "Angreifer & Zugangsdaten",
       "type": "row"
     },
     {
@@ -799,10 +810,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
+        "h": 9,
         "w": 6,
         "x": 0,
-        "y": 27
+        "y": 28
       },
       "id": 12,
       "options": {
@@ -814,7 +825,7 @@
         "sortBy": [
           {
             "desc": true,
-            "displayName": "Events"
+            "displayName": "Verbindungen"
           }
         ]
       },
@@ -825,6 +836,7 @@
             "uid": "loki"
           },
           "expr": "topk(15, sum by (src_ip) (count_over_time({job=\"cowrie\"} | json src_ip=\"src_ip\", eventid=\"eventid\" | src_ip != \"\" | eventid =~ \"cowrie.session.connect|cowrie.login.*\" [$__range])))",
+          "format": "table",
           "legendFormat": "{{src_ip}}",
           "queryType": "instant",
           "refId": "A"
@@ -847,9 +859,9 @@
             },
             "indexByName": {},
             "renameByName": {
-              "Value": "Events",
-              "Value #A": "Events",
-              "src_ip": "Source IP"
+              "Value": "Verbindungen",
+              "Value #A": "Verbindungen",
+              "src_ip": "Angreifer-IP"
             }
           }
         }
@@ -888,10 +900,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
+        "h": 9,
         "w": 6,
         "x": 6,
-        "y": 27
+        "y": 28
       },
       "id": 13,
       "options": {
@@ -903,7 +915,7 @@
         "sortBy": [
           {
             "desc": true,
-            "displayName": "Attempts"
+            "displayName": "Versuche"
           }
         ]
       },
@@ -914,6 +926,7 @@
             "uid": "loki"
           },
           "expr": "topk(15, sum by (username) (count_over_time({job=\"cowrie\"} | json username=\"username\", eventid=\"eventid\" | username != \"\" | eventid =~ \"cowrie.login.(failed|success)\" [$__range])))",
+          "format": "table",
           "legendFormat": "{{username}}",
           "queryType": "instant",
           "refId": "A"
@@ -936,9 +949,9 @@
             },
             "indexByName": {},
             "renameByName": {
-              "Value": "Attempts",
-              "Value #A": "Attempts",
-              "username": "Username"
+              "Value": "Versuche",
+              "Value #A": "Versuche",
+              "username": "Benutzername"
             }
           }
         }
@@ -977,10 +990,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
+        "h": 9,
         "w": 6,
         "x": 12,
-        "y": 27
+        "y": 28
       },
       "id": 14,
       "options": {
@@ -992,7 +1005,7 @@
         "sortBy": [
           {
             "desc": true,
-            "displayName": "Attempts"
+            "displayName": "Versuche"
           }
         ]
       },
@@ -1003,6 +1016,7 @@
             "uid": "loki"
           },
           "expr": "topk(15, sum by (password) (count_over_time({job=\"cowrie\"} | json | password != \"\" | eventid =~ \"cowrie.login.(failed|success)\" [$__range])))",
+          "format": "table",
           "legendFormat": "{{password}}",
           "queryType": "instant",
           "refId": "A"
@@ -1025,9 +1039,9 @@
             },
             "indexByName": {},
             "renameByName": {
-              "Value": "Attempts",
-              "Value #A": "Attempts",
-              "password": "Password"
+              "Value": "Versuche",
+              "Value #A": "Versuche",
+              "password": "Passwort"
             }
           }
         }
@@ -1066,10 +1080,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
+        "h": 9,
         "w": 6,
         "x": 18,
-        "y": 27
+        "y": 28
       },
       "id": 15,
       "options": {
@@ -1081,7 +1095,7 @@
         "sortBy": [
           {
             "desc": true,
-            "displayName": "Seen"
+            "displayName": "Anzahl"
           }
         ]
       },
@@ -1092,6 +1106,7 @@
             "uid": "loki"
           },
           "expr": "topk(10, sum by (version) (count_over_time({job=\"cowrie\"} | json version=\"version\", eventid=\"eventid\" | version != \"\" | eventid = \"cowrie.client.version\" [$__range])))",
+          "format": "table",
           "legendFormat": "{{version}}",
           "queryType": "instant",
           "refId": "A"
@@ -1114,9 +1129,9 @@
             },
             "indexByName": {},
             "renameByName": {
-              "Value": "Seen",
-              "Value #A": "Seen",
-              "version": "Client Version"
+              "Value": "Anzahl",
+              "Value #A": "Anzahl",
+              "version": "SSH-Client"
             }
           }
         }
@@ -1129,11 +1144,10 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 35
+        "y": 37
       },
-      "id": 16,
-      "panels": [],
-      "title": "Beweise & Defense-Reaktion",
+      "id": 1005,
+      "title": "Zugangsdaten-Kombinationen",
       "type": "row"
     },
     {
@@ -1141,531 +1155,74 @@
         "type": "loki",
         "uid": "loki"
       },
-      "description": "Rohbelege: Eventtyp, IP, Username und Passwort.",
-      "gridPos": {
-        "h": 10,
-        "w": 12,
-        "x": 0,
-        "y": 36
-      },
-      "id": 17,
-      "options": {
-        "dedupStrategy": "none",
-        "enableLogDetails": true,
-        "prettifyLogMessage": false,
-        "showCommonLabels": false,
-        "showLabels": false,
-        "showTime": true,
-        "sortOrder": "Descending",
-        "wrapLogMessage": false
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "loki",
-            "uid": "loki"
-          },
-          "expr": "{job=\"cowrie\"} | json src_ip=\"src_ip\", username=\"username\", password=\"password\", eventid=\"eventid\" | eventid =~ \"cowrie.login.(failed|success)\" | line_format \"{{.eventid}} | {{.src_ip}} | {{.username}} / {{.password}}\"",
-          "queryType": "range",
-          "refId": "A"
-        }
-      ],
-      "title": "Login-Beweise",
-      "type": "logs"
-    },
-    {
-      "datasource": {
-        "type": "loki",
-        "uid": "loki"
-      },
-      "description": "Rohbelege der Befehle nach Login im Honeypot.",
-      "gridPos": {
-        "h": 10,
-        "w": 12,
-        "x": 12,
-        "y": 36
-      },
-      "id": 18,
-      "options": {
-        "dedupStrategy": "none",
-        "enableLogDetails": true,
-        "prettifyLogMessage": false,
-        "showCommonLabels": false,
-        "showLabels": false,
-        "showTime": true,
-        "sortOrder": "Descending",
-        "wrapLogMessage": true
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "loki",
-            "uid": "loki"
-          },
-          "expr": "{job=\"cowrie\"} | json src_ip=\"src_ip\", input=\"input\", eventid=\"eventid\" | eventid = \"cowrie.command.input\" | line_format \"{{.src_ip}} | {{.input}}\"",
-          "queryType": "range",
-          "refId": "A"
-        }
-      ],
-      "title": "Eingegebene Angreifer-Befehle",
-      "type": "logs"
-    },
-    {
-      "datasource": {
-        "type": "loki",
-        "uid": "loki"
-      },
-      "description": "System-/Docker-Logs mit CrowdSec, Bouncer, Ban oder Decision-Bezug.",
-      "gridPos": {
-        "h": 8,
-        "w": 24,
-        "x": 0,
-        "y": 46
-      },
-      "id": 19,
-      "options": {
-        "dedupStrategy": "none",
-        "enableLogDetails": true,
-        "prettifyLogMessage": false,
-        "showCommonLabels": false,
-        "showLabels": true,
-        "showTime": true,
-        "sortOrder": "Descending",
-        "wrapLogMessage": true
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "loki",
-            "uid": "loki"
-          },
-          "expr": "{job=~\"system|docker\"} |~ \"(?i)(crowdsec|bouncer|decision|ban|remediation)\"",
-          "queryType": "range",
-          "refId": "A"
-        }
-      ],
-      "title": "CrowdSec / Bouncer Hinweise",
-      "type": "logs"
-    },
-    {
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 54
-      },
-      "id": 20,
-      "panels": [],
-      "title": "Defense-Reaktion: CrowdSec & Bouncer",
-      "type": "row"
-    },
-    {
-      "datasource": {
-        "type": "loki",
-        "uid": "loki"
-      },
-      "description": "Eigene Loki-Events aus systemd unit crowdsec.service im gewählten Zeitraum.",
       "fieldConfig": {
         "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "blue"
-              },
-              {
-                "color": "orange",
-                "value": 1
-              },
-              {
-                "color": "red",
-                "value": 25
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 6,
-        "x": 0,
-        "y": 55
-      },
-      "id": 21,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "center",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "loki",
-            "uid": "loki"
-          },
-          "expr": "sum(count_over_time({job=\"system\", filename=\"/var/log/crowdsec_api.log\"}[$__range]))",
-          "queryType": "instant",
-          "refId": "A"
-        }
-      ],
-      "title": "CrowdSec Service Events",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "loki",
-        "uid": "loki"
-      },
-      "description": "Eigene Loki-Events aus systemd unit crowdsec-firewall-bouncer.service im gewählten Zeitraum.",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "blue"
-              },
-              {
-                "color": "orange",
-                "value": 1
-              },
-              {
-                "color": "red",
-                "value": 25
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 6,
-        "x": 6,
-        "y": 55
-      },
-      "id": 22,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "center",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "loki",
-            "uid": "loki"
-          },
-          "expr": "sum(count_over_time({job=\"system\", filename=\"/var/log/crowdsec_api.log\"}[$__range]))",
-          "queryType": "instant",
-          "refId": "A"
-        }
-      ],
-      "title": "Bouncer Service Events",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "loki",
-        "uid": "loki"
-      },
-      "description": "CrowdSec/Bouncer-Logs mit Wörtern wie ban, decision, remediation oder alert.",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              },
-              {
-                "color": "orange",
-                "value": 1
-              },
-              {
-                "color": "red",
-                "value": 10
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 6,
-        "x": 12,
-        "y": 55
-      },
-      "id": 23,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "center",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "loki",
-            "uid": "loki"
-          },
-          "expr": "sum(count_over_time({job=~\"crowdsec|crowdsec-bouncer\"} |~ \"(?i)(ban|decision|alert|remediation|block|deny)\" [$__range]))",
-          "queryType": "instant",
-          "refId": "A"
-        }
-      ],
-      "title": "Ban/Decision Keywords",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "loki",
-        "uid": "loki"
-      },
-      "description": "Alle CrowdSec/Bouncer-Logs mit sicherheitsrelevanten Schlüsselwörtern im Zeitraum.",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              },
-              {
-                "color": "orange",
-                "value": 1
-              },
-              {
-                "color": "red",
-                "value": 20
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 6,
-        "x": 18,
-        "y": 55
-      },
-      "id": 24,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "center",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "loki",
-            "uid": "loki"
-          },
-          "expr": "sum(count_over_time({job=~\"crowdsec|crowdsec-bouncer\"} |~ \"(?i)(crowdsec|bouncer|scenario|overflow|decision|ban|remediation|block|deny|error|warn)\" [$__range]))",
-          "queryType": "instant",
-          "refId": "A"
-        }
-      ],
-      "title": "Defense Keywords gesamt",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "loki",
-        "uid": "loki"
-      },
-      "description": "Zeitlicher Zusammenhang zwischen CrowdSec-Agent, Firewall-Bouncer und Ban/Decision-Hinweisen.",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
           "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "bars",
-            "fillOpacity": 55,
-            "gradientMode": "opacity",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
             },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
+            "inspect": false
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Username"
             },
-            "showPoints": "never",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "normal"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
+            "properties": [
               {
-                "color": "green"
+                "id": "custom.width",
+                "value": 160
               }
             ]
           },
-          "unit": "short"
-        },
-        "overrides": []
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Password"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 180
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Versuche"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 90
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
-        "h": 7,
-        "w": 24,
-        "x": 0,
-        "y": 59
-      },
-      "id": 25,
-      "options": {
-        "legend": {
-          "calcs": [
-            "sum"
-          ],
-          "displayMode": "table",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        }
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "loki",
-            "uid": "loki"
-          },
-          "expr": "sum(count_over_time({job=\"system\", filename=\"/var/log/crowdsec_api.log\"}[$__interval]))",
-          "legendFormat": "CrowdSec service",
-          "queryType": "range",
-          "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "loki",
-            "uid": "loki"
-          },
-          "expr": "sum(count_over_time({job=\"system\", filename=\"/var/log/crowdsec_api.log\"}[$__interval]))",
-          "legendFormat": "Firewall bouncer",
-          "queryType": "range",
-          "refId": "B"
-        },
-        {
-          "datasource": {
-            "type": "loki",
-            "uid": "loki"
-          },
-          "expr": "sum(count_over_time({job=~\"crowdsec|crowdsec-bouncer\"} |~ \"(?i)(ban|decision|alert|remediation|block|deny)\" [$__interval]))",
-          "legendFormat": "Ban/decision keywords",
-          "queryType": "range",
-          "refId": "C"
-        }
-      ],
-      "title": "Defense-Timeline",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "loki",
-        "uid": "loki"
-      },
-      "description": "Rohlogs des CrowdSec-Agenten. Hier sollten Parser-, Scenario-, Alert- und Decision-Hinweise landen.",
-      "gridPos": {
-        "h": 10,
+        "h": 9,
         "w": 12,
         "x": 0,
-        "y": 66
+        "y": 38
       },
-      "id": 26,
+      "id": 32,
       "options": {
-        "dedupStrategy": "none",
-        "enableLogDetails": true,
-        "prettifyLogMessage": false,
-        "showCommonLabels": false,
-        "showLabels": true,
-        "showTime": true,
-        "sortOrder": "Descending",
-        "wrapLogMessage": true
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Versuche"
+          }
+        ]
       },
       "targets": [
         {
@@ -1673,86 +1230,39 @@
             "type": "loki",
             "uid": "loki"
           },
-          "expr": "{job=\"system\", filename=\"/var/log/crowdsec_api.log\"}",
-          "queryType": "range",
+          "editorMode": "code",
+          "expr": "topk(25, sum by (username, password) (count_over_time({job=\"cowrie\"} | json username=\"username\", password=\"password\", eventid=\"eventid\" | eventid =~ \"cowrie.login.(failed|success)\" | username != \"\" [$__range])))",
+          "format": "table",
+          "queryType": "instant",
           "refId": "A"
         }
       ],
-      "title": "CrowdSec Service Logs",
-      "type": "logs"
-    },
-    {
-      "datasource": {
-        "type": "loki",
-        "uid": "loki"
-      },
-      "description": "Rohlogs des CrowdSec Firewall Bouncers. Hier sieht man, ob Entscheidungen technisch umgesetzt werden.",
-      "gridPos": {
-        "h": 10,
-        "w": 12,
-        "x": 12,
-        "y": 66
-      },
-      "id": 27,
-      "options": {
-        "dedupStrategy": "none",
-        "enableLogDetails": true,
-        "prettifyLogMessage": false,
-        "showCommonLabels": false,
-        "showLabels": true,
-        "showTime": true,
-        "sortOrder": "Descending",
-        "wrapLogMessage": true
-      },
-      "targets": [
+      "title": "Top Credential Pairs",
+      "transformations": [
         {
-          "datasource": {
-            "type": "loki",
-            "uid": "loki"
-          },
-          "expr": "{job=\"system\", filename=\"/var/log/crowdsec_api.log\"}",
-          "queryType": "range",
-          "refId": "A"
+          "id": "labelsToFields",
+          "options": {
+            "mode": "columns"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "__name__": true
+            },
+            "indexByName": {},
+            "renameByName": {
+              "Value": "Versuche",
+              "Value #A": "Versuche",
+              "password": "Passwort",
+              "username": "Benutzer"
+            }
+          }
         }
       ],
-      "title": "Firewall Bouncer Logs",
-      "type": "logs"
-    },
-    {
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 76
-      },
-      "id": 28,
-      "panels": [],
-      "title": "Login-Zuordnung: IP -> Credentials",
-      "type": "row"
-    },
-    {
-      "datasource": {
-        "type": "loki",
-        "uid": "loki"
-      },
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 24,
-        "x": 0,
-        "y": 77
-      },
-      "id": 29,
-      "options": {
-        "content": "### Credential Attribution\n\nNutze diese Sektion wie ein SOC-Triage-Board:\n\n1. **Credential Matrix**: Welche IP probiert welche Credentials?\n2. **Top Attacker IPs**: Welche IP erzeugt die meisten Login-Versuche?\n3. **Credential Pairs**: Welche Username/Passwort-Kombinationen werden automatisiert getestet?\n4. **Evidence Logs**: Einzelereignisse mit Zeitstempel pruefen.\n5. **Post-Login Commands**: Wenn hier Befehle auftauchen, ist es relevanter als nur Scanning.",
-        "mode": "markdown"
-      },
-      "title": "SOC Analyst Guide",
-      "type": "text"
+      "type": "table"
     },
     {
       "datasource": {
@@ -1834,9 +1344,9 @@
       },
       "gridPos": {
         "h": 9,
-        "w": 24,
-        "x": 0,
-        "y": 82
+        "w": 12,
+        "x": 12,
+        "y": 38
       },
       "id": 30,
       "options": {
@@ -1860,6 +1370,7 @@
           },
           "editorMode": "code",
           "expr": "topk(50, sum by (src_ip, username, password, eventid) (count_over_time({job=\"cowrie\"} | json src_ip=\"src_ip\", username=\"username\", password=\"password\", eventid=\"eventid\" | eventid =~ \"cowrie.login.(failed|success)\" | src_ip != \"\" | username != \"\" [$__range])))",
+          "format": "table",
           "queryType": "instant",
           "refId": "A"
         }
@@ -1879,19 +1390,14 @@
               "Time": true,
               "__name__": true
             },
-            "indexByName": {
-              "Attacker IP": 0,
-              "Password": 2,
-              "Result": 3,
-              "Username": 1,
-              "Versuche": 4
-            },
+            "indexByName": {},
             "renameByName": {
               "Value": "Versuche",
-              "eventid": "Result",
-              "password": "Password",
-              "src_ip": "Attacker IP",
-              "username": "Username"
+              "Value #A": "Versuche",
+              "eventid": "Ergebnis",
+              "password": "Passwort",
+              "src_ip": "Angreifer-IP",
+              "username": "Benutzer"
             }
           }
         }
@@ -1899,236 +1405,16 @@
       "type": "table"
     },
     {
-      "datasource": {
-        "type": "loki",
-        "uid": "loki"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "align": "auto",
-            "cellOptions": {
-              "type": "auto"
-            },
-            "inspect": false
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Attacker IP"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 180
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Result"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 190
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Versuche"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 90
-              }
-            ]
-          }
-        ]
-      },
+      "collapsed": false,
       "gridPos": {
-        "h": 8,
-        "w": 12,
+        "h": 1,
+        "w": 24,
         "x": 0,
-        "y": 91
+        "y": 47
       },
-      "id": 31,
-      "options": {
-        "cellHeight": "sm",
-        "footer": {
-          "show": false
-        },
-        "showHeader": true,
-        "sortBy": [
-          {
-            "desc": true,
-            "displayName": "Versuche"
-          }
-        ]
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "loki",
-            "uid": "loki"
-          },
-          "editorMode": "code",
-          "expr": "topk(25, sum by (src_ip, eventid) (count_over_time({job=\"cowrie\"} | json src_ip=\"src_ip\", eventid=\"eventid\" | eventid =~ \"cowrie.login.(failed|success)\" | src_ip != \"\" [$__range])))",
-          "queryType": "instant",
-          "refId": "A"
-        }
-      ],
-      "title": "Top Attacker IPs by Login Attempts",
-      "transformations": [
-        {
-          "id": "labelsToFields",
-          "options": {
-            "mode": "columns"
-          }
-        },
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {
-              "Time": true,
-              "__name__": true
-            },
-            "indexByName": {
-              "Attacker IP": 0,
-              "Result": 1,
-              "Versuche": 2
-            },
-            "renameByName": {
-              "Value": "Versuche",
-              "eventid": "Result",
-              "src_ip": "Attacker IP"
-            }
-          }
-        }
-      ],
-      "type": "table"
-    },
-    {
-      "datasource": {
-        "type": "loki",
-        "uid": "loki"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "align": "auto",
-            "cellOptions": {
-              "type": "auto"
-            },
-            "inspect": false
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Username"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 160
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Password"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 180
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Versuche"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 90
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 91
-      },
-      "id": 32,
-      "options": {
-        "cellHeight": "sm",
-        "footer": {
-          "show": false
-        },
-        "showHeader": true,
-        "sortBy": [
-          {
-            "desc": true,
-            "displayName": "Versuche"
-          }
-        ]
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "loki",
-            "uid": "loki"
-          },
-          "editorMode": "code",
-          "expr": "topk(25, sum by (username, password) (count_over_time({job=\"cowrie\"} | json username=\"username\", password=\"password\", eventid=\"eventid\" | eventid =~ \"cowrie.login.(failed|success)\" | username != \"\" [$__range])))",
-          "queryType": "instant",
-          "refId": "A"
-        }
-      ],
-      "title": "Top Credential Pairs",
-      "transformations": [
-        {
-          "id": "labelsToFields",
-          "options": {
-            "mode": "columns"
-          }
-        },
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {
-              "Time": true,
-              "__name__": true
-            },
-            "indexByName": {
-              "Password": 1,
-              "Username": 0,
-              "Versuche": 2
-            },
-            "renameByName": {
-              "Value": "Versuche",
-              "password": "Password",
-              "username": "Username"
-            }
-          }
-        }
-      ],
-      "type": "table"
+      "id": 1006,
+      "title": "Beweise (Rohlogs)",
+      "type": "row"
     },
     {
       "datasource": {
@@ -2140,10 +1426,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 9,
-        "w": 24,
+        "h": 11,
+        "w": 12,
         "x": 0,
-        "y": 99
+        "y": 48
       },
       "id": 33,
       "options": {
@@ -2160,7 +1446,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "loki"
+            "uid": "ffkrjj7xqfwg0b"
           },
           "editorMode": "code",
           "expr": "{job=\"cowrie\"} | json src_ip=\"src_ip\", username=\"username\", password=\"password\", eventid=\"eventid\" | eventid =~ \"cowrie.login.(failed|success)\" | line_format \"{{.eventid}} | ip={{.src_ip}} | user={{.username}} | pass={{.password}}\"",
@@ -2168,7 +1454,7 @@
           "refId": "A"
         }
       ],
-      "title": "Evidence: Login Attempts with IP and Credentials",
+      "title": "Login-Versuche mit IP und Zugangsdaten",
       "type": "logs"
     },
     {
@@ -2181,10 +1467,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 24,
-        "x": 0,
-        "y": 108
+        "h": 11,
+        "w": 12,
+        "x": 12,
+        "y": 48
       },
       "id": 34,
       "options": {
@@ -2199,7 +1485,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "loki"
+            "uid": "ffkrjj7xqfwg0b"
           },
           "editorMode": "code",
           "expr": "{job=\"cowrie\"} | json src_ip=\"src_ip\", input=\"input\", eventid=\"eventid\" | eventid = \"cowrie.command.input\" | line_format \"ip={{.src_ip}} | cmd={{.input}}\"",
@@ -2207,8 +1493,413 @@
           "refId": "A"
         }
       ],
-      "title": "Evidence: Post-Login Commands by IP",
+      "title": "Befehle nach Login",
       "type": "logs"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 59
+      },
+      "id": 1007,
+      "title": "Abwehr: CrowdSec",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "loki"
+      },
+      "description": "Eigene Loki-Events aus systemd unit crowdsec.service im gewählten Zeitraum.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue"
+              },
+              {
+                "color": "orange",
+                "value": 1
+              },
+              {
+                "color": "red",
+                "value": 25
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 8,
+        "x": 0,
+        "y": 60
+      },
+      "id": 21,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "ffkrjj7xqfwg0b"
+          },
+          "expr": "sum(count_over_time({job=\"system\", filename=\"/var/log/crowdsec_api.log\"}[$__range]))",
+          "queryType": "instant",
+          "refId": "A"
+        }
+      ],
+      "title": "CrowdSec Events gesamt",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "loki"
+      },
+      "description": "Eigene Loki-Events aus systemd unit crowdsec.service im gewählten Zeitraum.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue"
+              },
+              {
+                "color": "orange",
+                "value": 1
+              },
+              {
+                "color": "red",
+                "value": 25
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 8,
+        "x": 8,
+        "y": 60
+      },
+      "id": 1008,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "ffkrjj7xqfwg0b"
+          },
+          "expr": "sum(count_over_time({job=\"system\", filename=\"/var/log/crowdsec_api.log\"} |~ \"(?i)(decision|ban)\" [$__range]))",
+          "queryType": "instant",
+          "refId": "A"
+        }
+      ],
+      "title": "Decisions / Bans erwaehnt",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "loki"
+      },
+      "description": "Eigene Loki-Events aus systemd unit crowdsec.service im gewählten Zeitraum.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue"
+              },
+              {
+                "color": "orange",
+                "value": 1
+              },
+              {
+                "color": "red",
+                "value": 25
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 8,
+        "x": 16,
+        "y": 60
+      },
+      "id": 1009,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "ffkrjj7xqfwg0b"
+          },
+          "expr": "sum(count_over_time({job=\"system\", filename=\"/var/log/crowdsec_api.log\"} |~ \"(?i)(level=error|level=warn)\" [$__range]))",
+          "queryType": "instant",
+          "refId": "A"
+        }
+      ],
+      "title": "Fehler / Warnungen",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "loki"
+      },
+      "description": "Zeitlicher Zusammenhang zwischen CrowdSec-Agent, Firewall-Bouncer und Ban/Decision-Hinweisen.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "bars",
+            "fillOpacity": 55,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "normal"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 24,
+        "x": 0,
+        "y": 64
+      },
+      "id": 25,
+      "options": {
+        "legend": {
+          "calcs": [
+            "sum"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "ffkrjj7xqfwg0b"
+          },
+          "expr": "sum(count_over_time({job=\"system\", filename=\"/var/log/crowdsec_api.log\"}[$__interval]))",
+          "legendFormat": "API-Events",
+          "queryType": "range",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "ffkrjj7xqfwg0b"
+          },
+          "expr": "sum(count_over_time({job=\"system\", filename=\"/var/log/crowdsec_api.log\"} |~ \"(?i)(decision|ban)\" [$__interval]))",
+          "legendFormat": "Decisions/Bans",
+          "queryType": "range",
+          "refId": "B"
+        }
+      ],
+      "title": "CrowdSec-Aktivitaet",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "loki"
+      },
+      "description": "Rohlogs des CrowdSec-Agenten. Hier sollten Parser-, Scenario-, Alert- und Decision-Hinweise landen.",
+      "gridPos": {
+        "h": 9,
+        "w": 16,
+        "x": 0,
+        "y": 70
+      },
+      "id": 26,
+      "options": {
+        "dedupStrategy": "none",
+        "enableLogDetails": true,
+        "prettifyLogMessage": false,
+        "showCommonLabels": false,
+        "showLabels": true,
+        "showTime": true,
+        "sortOrder": "Descending",
+        "wrapLogMessage": true
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "ffkrjj7xqfwg0b"
+          },
+          "expr": "{job=\"system\", filename=\"/var/log/crowdsec_api.log\"}",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "CrowdSec Service-Logs",
+      "type": "logs"
+    },
+    {
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 16,
+        "y": 70
+      },
+      "id": 1010,
+      "options": {
+        "content": "**CrowdSec** bannt verdaechtige IPs automatisch.\n\nDer **Firewall-Bouncer** schreibt kein eigenes Logfile — seine Aktivitaet laeuft ueber `crowdsec_api.log` (Decisions-Stream, Heartbeats).\n\nEchte aktive Bans live abfragen:\n\n```\nsudo cscli decisions list\n```",
+        "mode": "markdown"
+      },
+      "title": "Hinweis CrowdSec & Bouncer",
+      "type": "text"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 79
+      },
+      "id": 1011,
+      "title": "Hinweise zur Analyse",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "loki"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 24,
+        "x": 0,
+        "y": 80
+      },
+      "id": 29,
+      "options": {
+        "content": "### Credential Attribution\n\nNutze diese Sektion wie ein SOC-Triage-Board:\n\n1. **Credential Matrix**: Welche IP probiert welche Credentials?\n2. **Top Attacker IPs**: Welche IP erzeugt die meisten Login-Versuche?\n3. **Credential Pairs**: Welche Username/Passwort-Kombinationen werden automatisiert getestet?\n4. **Evidence Logs**: Einzelereignisse mit Zeitstempel pruefen.\n5. **Post-Login Commands**: Wenn hier Befehle auftauchen, ist es relevanter als nur Scanning.",
+        "mode": "markdown"
+      },
+      "title": "SOC Analyst Guide",
+      "type": "text"
     }
   ],
   "refresh": "30s",
@@ -2250,6 +1941,6 @@
   "timezone": "browser",
   "title": "IT / Cowrie SOC Command Center",
   "uid": "cowrie-soc-command-center",
-  "version": 9,
+  "version": 10,
   "weekStart": ""
 }
