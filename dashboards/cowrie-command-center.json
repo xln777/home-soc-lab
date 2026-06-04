@@ -5,7 +5,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
-  "id": null,
+  "id": 1928198059012096,
   "links": [
     {
       "asDropdown": false,
@@ -40,6 +40,7 @@
         "type": "loki",
         "uid": "loki"
       },
+      "description": "Alle Cowrie-Verbindungen im gewählten Zeitraum.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -94,20 +95,20 @@
             "type": "loki",
             "uid": "loki"
           },
-          "expr": "sum(count_over_time({job=\"cowrie\"} | json | eventid = \"cowrie.session.connect\" [$__range]))",
+          "expr": "sum(count_over_time({job=\"cowrie\"} | json | eventid =~ \"cowrie.session.connect|cowrie.login.*|cowrie.command.input\" [$__range]))",
           "queryType": "instant",
           "refId": "A"
         }
       ],
-      "title": "Angriffs-Sessions",
-      "type": "stat",
-      "description": "Alle Cowrie-Verbindungen im gewählten Zeitraum."
+      "title": "Angriffs-Events gesamt",
+      "type": "stat"
     },
     {
       "datasource": {
         "type": "loki",
         "uid": "loki"
       },
+      "description": "Fehlgeschlagene SSH-Logins gegen den Honeypot.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -168,14 +169,14 @@
         }
       ],
       "title": "Fehlgeschlagene Logins",
-      "type": "stat",
-      "description": "Fehlgeschlagene SSH-Logins gegen den Honeypot."
+      "type": "stat"
     },
     {
       "datasource": {
         "type": "loki",
         "uid": "loki"
       },
+      "description": "Befehle nach erfolgreicher Honeypot-Interaktion.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -236,14 +237,14 @@
         }
       ],
       "title": "Eingegebene Befehle",
-      "type": "stat",
-      "description": "Befehle nach erfolgreicher Honeypot-Interaktion."
+      "type": "stat"
     },
     {
       "datasource": {
         "type": "loki",
         "uid": "loki"
       },
+      "description": "Anzahl unterschiedlicher GeoIP-Länder im Zeitraum.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -304,14 +305,14 @@
         }
       ],
       "title": "Herkunftsländer",
-      "type": "stat",
-      "description": "Anzahl unterschiedlicher GeoIP-Länder im Zeitraum."
+      "type": "stat"
     },
     {
       "datasource": {
         "type": "loki",
         "uid": "loki"
       },
+      "description": "Zeitlicher Ablauf: Sessions, Login-Versuche und Befehle.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -426,8 +427,7 @@
         }
       ],
       "title": "Angriffstimeline",
-      "type": "timeseries",
-      "description": "Zeitlicher Ablauf: Sessions, Login-Versuche und Befehle."
+      "type": "timeseries"
     },
     {
       "collapsed": false,
@@ -447,6 +447,7 @@
         "type": "loki",
         "uid": "loki"
       },
+      "description": "GeoIP-Koordinaten aus Cowrie src_ip. Nicht forensisch exakt, aber gut für Lagebild.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -567,14 +568,14 @@
           }
         }
       ],
-      "type": "geomap",
-      "description": "GeoIP-Koordinaten aus Cowrie src_ip. Nicht forensisch exakt, aber gut für Lagebild."
+      "type": "geomap"
     },
     {
       "datasource": {
         "type": "loki",
         "uid": "loki"
       },
+      "description": "Länder mit den meisten Cowrie-Ereignissen.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -652,23 +653,23 @@
               "Time": true,
               "__name__": true
             },
+            "indexByName": {},
             "renameByName": {
               "Value": "Events",
-              "geoip_country_name": "Country",
-              "Value #A": "Events"
-            },
-            "indexByName": {}
+              "Value #A": "Events",
+              "geoip_country_name": "Country"
+            }
           }
         }
       ],
-      "type": "table",
-      "description": "Länder mit den meisten Cowrie-Ereignissen."
+      "type": "table"
     },
     {
       "datasource": {
         "type": "loki",
         "uid": "loki"
       },
+      "description": "Städte aus GeoIP-Lookup. Kann bei VPN/Cloud-IPs ungenau sein.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -741,18 +742,17 @@
               "Time": true,
               "__name__": true
             },
+            "indexByName": {},
             "renameByName": {
               "Value": "Events",
+              "Value #A": "Events",
               "geoip_city_name": "City",
-              "geoip_country_name": "Country",
-              "Value #A": "Events"
-            },
-            "indexByName": {}
+              "geoip_country_name": "Country"
+            }
           }
         }
       ],
-      "type": "table",
-      "description": "Städte aus GeoIP-Lookup. Kann bei VPN/Cloud-IPs ungenau sein."
+      "type": "table"
     },
     {
       "collapsed": false,
@@ -772,6 +772,7 @@
         "type": "loki",
         "uid": "loki"
       },
+      "description": "Quell-IPs mit den meisten Sessions oder Login-Events.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -844,23 +845,23 @@
               "Time": true,
               "__name__": true
             },
+            "indexByName": {},
             "renameByName": {
               "Value": "Events",
-              "src_ip": "Source IP",
-              "Value #A": "Events"
-            },
-            "indexByName": {}
+              "Value #A": "Events",
+              "src_ip": "Source IP"
+            }
           }
         }
       ],
-      "type": "table",
-      "description": "Quell-IPs mit den meisten Sessions oder Login-Events."
+      "type": "table"
     },
     {
       "datasource": {
         "type": "loki",
         "uid": "loki"
       },
+      "description": "Am häufigsten getestete Benutzernamen.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -933,23 +934,23 @@
               "Time": true,
               "__name__": true
             },
+            "indexByName": {},
             "renameByName": {
               "Value": "Attempts",
-              "username": "Username",
-              "Value #A": "Attempts"
-            },
-            "indexByName": {}
+              "Value #A": "Attempts",
+              "username": "Username"
+            }
           }
         }
       ],
-      "type": "table",
-      "description": "Am häufigsten getestete Benutzernamen."
+      "type": "table"
     },
     {
       "datasource": {
         "type": "loki",
         "uid": "loki"
       },
+      "description": "Am häufigsten getestete Passwörter im Honeypot.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1022,23 +1023,23 @@
               "Time": true,
               "__name__": true
             },
+            "indexByName": {},
             "renameByName": {
               "Value": "Attempts",
-              "password": "Password",
-              "Value #A": "Attempts"
-            },
-            "indexByName": {}
+              "Value #A": "Attempts",
+              "password": "Password"
+            }
           }
         }
       ],
-      "type": "table",
-      "description": "Am häufigsten getestete Passwörter im Honeypot."
+      "type": "table"
     },
     {
       "datasource": {
         "type": "loki",
         "uid": "loki"
       },
+      "description": "SSH-Client-Banner der eingehenden Verbindungen.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1111,17 +1112,16 @@
               "Time": true,
               "__name__": true
             },
+            "indexByName": {},
             "renameByName": {
               "Value": "Seen",
-              "version": "Client Version",
-              "Value #A": "Seen"
-            },
-            "indexByName": {}
+              "Value #A": "Seen",
+              "version": "Client Version"
+            }
           }
         }
       ],
-      "type": "table",
-      "description": "SSH-Client-Banner der eingehenden Verbindungen."
+      "type": "table"
     },
     {
       "collapsed": false,
@@ -1141,6 +1141,7 @@
         "type": "loki",
         "uid": "loki"
       },
+      "description": "Rohbelege: Eventtyp, IP, Username und Passwort.",
       "gridPos": {
         "h": 10,
         "w": 12,
@@ -1170,14 +1171,14 @@
         }
       ],
       "title": "Login-Beweise",
-      "type": "logs",
-      "description": "Rohbelege: Eventtyp, IP, Username und Passwort."
+      "type": "logs"
     },
     {
       "datasource": {
         "type": "loki",
         "uid": "loki"
       },
+      "description": "Rohbelege der Befehle nach Login im Honeypot.",
       "gridPos": {
         "h": 10,
         "w": 12,
@@ -1207,14 +1208,14 @@
         }
       ],
       "title": "Eingegebene Angreifer-Befehle",
-      "type": "logs",
-      "description": "Rohbelege der Befehle nach Login im Honeypot."
+      "type": "logs"
     },
     {
       "datasource": {
         "type": "loki",
         "uid": "loki"
       },
+      "description": "System-/Docker-Logs mit CrowdSec, Bouncer, Ban oder Decision-Bezug.",
       "gridPos": {
         "h": 8,
         "w": 24,
@@ -1244,8 +1245,7 @@
         }
       ],
       "title": "CrowdSec / Bouncer Hinweise",
-      "type": "logs",
-      "description": "System-/Docker-Logs mit CrowdSec, Bouncer, Ban oder Decision-Bezug."
+      "type": "logs"
     },
     {
       "collapsed": false,
@@ -1717,18 +1717,512 @@
       ],
       "title": "Firewall Bouncer Logs",
       "type": "logs"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 76
+      },
+      "id": 28,
+      "panels": [],
+      "title": "Login-Zuordnung: IP -> Credentials",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "loki"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 24,
+        "x": 0,
+        "y": 77
+      },
+      "id": 29,
+      "options": {
+        "content": "### Credential Attribution\n\nNutze diese Sektion wie ein SOC-Triage-Board:\n\n1. **Credential Matrix**: Welche IP probiert welche Credentials?\n2. **Top Attacker IPs**: Welche IP erzeugt die meisten Login-Versuche?\n3. **Credential Pairs**: Welche Username/Passwort-Kombinationen werden automatisiert getestet?\n4. **Evidence Logs**: Einzelereignisse mit Zeitstempel pruefen.\n5. **Post-Login Commands**: Wenn hier Befehle auftauchen, ist es relevanter als nur Scanning.",
+        "mode": "markdown"
+      },
+      "title": "SOC Analyst Guide",
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "loki"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Attacker IP"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 170
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Username"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 140
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Password"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 160
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Result"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 180
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Versuche"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 90
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 82
+      },
+      "id": 30,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Versuche"
+          }
+        ]
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "loki"
+          },
+          "editorMode": "code",
+          "expr": "topk(50, sum by (src_ip, username, password, eventid) (count_over_time({job=\"cowrie\"} | json src_ip=\"src_ip\", username=\"username\", password=\"password\", eventid=\"eventid\" | eventid =~ \"cowrie.login.(failed|success)\" | src_ip != \"\" | username != \"\" [$__range])))",
+          "queryType": "instant",
+          "refId": "A"
+        }
+      ],
+      "title": "Credential Matrix: Attacker IP -> Username -> Password",
+      "transformations": [
+        {
+          "id": "labelsToFields",
+          "options": {
+            "mode": "columns"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "__name__": true
+            },
+            "indexByName": {
+              "Attacker IP": 0,
+              "Password": 2,
+              "Result": 3,
+              "Username": 1,
+              "Versuche": 4
+            },
+            "renameByName": {
+              "Value": "Versuche",
+              "eventid": "Result",
+              "password": "Password",
+              "src_ip": "Attacker IP",
+              "username": "Username"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "loki"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Attacker IP"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 180
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Result"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 190
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Versuche"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 90
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 91
+      },
+      "id": 31,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Versuche"
+          }
+        ]
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "loki"
+          },
+          "editorMode": "code",
+          "expr": "topk(25, sum by (src_ip, eventid) (count_over_time({job=\"cowrie\"} | json src_ip=\"src_ip\", eventid=\"eventid\" | eventid =~ \"cowrie.login.(failed|success)\" | src_ip != \"\" [$__range])))",
+          "queryType": "instant",
+          "refId": "A"
+        }
+      ],
+      "title": "Top Attacker IPs by Login Attempts",
+      "transformations": [
+        {
+          "id": "labelsToFields",
+          "options": {
+            "mode": "columns"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "__name__": true
+            },
+            "indexByName": {
+              "Attacker IP": 0,
+              "Result": 1,
+              "Versuche": 2
+            },
+            "renameByName": {
+              "Value": "Versuche",
+              "eventid": "Result",
+              "src_ip": "Attacker IP"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "loki"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Username"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 160
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Password"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 180
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Versuche"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 90
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 91
+      },
+      "id": 32,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Versuche"
+          }
+        ]
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "loki"
+          },
+          "editorMode": "code",
+          "expr": "topk(25, sum by (username, password) (count_over_time({job=\"cowrie\"} | json username=\"username\", password=\"password\", eventid=\"eventid\" | eventid =~ \"cowrie.login.(failed|success)\" | username != \"\" [$__range])))",
+          "queryType": "instant",
+          "refId": "A"
+        }
+      ],
+      "title": "Top Credential Pairs",
+      "transformations": [
+        {
+          "id": "labelsToFields",
+          "options": {
+            "mode": "columns"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "__name__": true
+            },
+            "indexByName": {
+              "Password": 1,
+              "Username": 0,
+              "Versuche": 2
+            },
+            "renameByName": {
+              "Value": "Versuche",
+              "password": "Password",
+              "username": "Username"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "loki"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 99
+      },
+      "id": 33,
+      "options": {
+        "dedupStrategy": "none",
+        "enableLogDetails": true,
+        "prettifyLogMessage": false,
+        "showCommonLabels": false,
+        "showLabels": false,
+        "showTime": true,
+        "sortOrder": "Descending",
+        "wrapLogMessage": false
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "loki"
+          },
+          "editorMode": "code",
+          "expr": "{job=\"cowrie\"} | json src_ip=\"src_ip\", username=\"username\", password=\"password\", eventid=\"eventid\" | eventid =~ \"cowrie.login.(failed|success)\" | line_format \"{{.eventid}} | ip={{.src_ip}} | user={{.username}} | pass={{.password}}\"",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Evidence: Login Attempts with IP and Credentials",
+      "type": "logs"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "loki"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 108
+      },
+      "id": 34,
+      "options": {
+        "dedupStrategy": "none",
+        "enableLogDetails": true,
+        "showLabels": false,
+        "showTime": true,
+        "sortOrder": "Descending",
+        "wrapLogMessage": false
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "loki"
+          },
+          "editorMode": "code",
+          "expr": "{job=\"cowrie\"} | json src_ip=\"src_ip\", input=\"input\", eventid=\"eventid\" | eventid = \"cowrie.command.input\" | line_format \"ip={{.src_ip}} | cmd={{.input}}\"",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Evidence: Post-Login Commands by IP",
+      "type": "logs"
     }
   ],
   "refresh": "30s",
   "schemaVersion": 39,
   "style": "dark",
   "tags": [
-    "soc",
     "cowrie",
-    "honeypot",
-    "geoip",
     "crowdsec",
-    "home-soc-lab"
+    "geoip",
+    "home-soc-lab",
+    "honeypot",
+    "server",
+    "soc",
+    "wm-cto"
   ],
   "templating": {
     "list": []
@@ -1754,8 +2248,8 @@
     ]
   },
   "timezone": "browser",
-  "title": "Cowrie SOC Command Center - Live Attack Monitoring",
+  "title": "IT / Cowrie SOC Command Center",
   "uid": "cowrie-soc-command-center",
-  "version": 2,
+  "version": 7,
   "weekStart": ""
 }
