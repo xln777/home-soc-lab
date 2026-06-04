@@ -604,6 +604,24 @@
         }
       ],
       "title": "Protokoll-Verteilung",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true
+            },
+            "indexByName": {},
+            "renameByName": {
+              "Value": "Modbus",
+              "Value #A": "Modbus",
+              "Value #B": "S7Comm",
+              "Value #C": "SNMP",
+              "Value #D": "BACnet"
+            }
+          }
+        }
+      ],
       "type": "bargauge"
     }
   ],
@@ -624,5 +642,5 @@
   "timezone": "browser",
   "title": "OT / Conpot Honeypot",
   "uid": "ot-conpot-honeypot",
-  "version": 3
+  "version": 4
 }
