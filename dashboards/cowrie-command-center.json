@@ -50,15 +50,20 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
-                "color": "orange",
+                "color": "yellow",
                 "value": 1
               },
               {
+                "color": "orange",
+                "value": 1000
+              },
+              {
                 "color": "red",
-                "value": 50
+                "value": 10000
               }
             ]
           },
@@ -68,7 +73,7 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 6,
+        "w": 5,
         "x": 0,
         "y": 1
       },
@@ -118,15 +123,20 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
-                "color": "orange",
+                "color": "yellow",
                 "value": 1
               },
               {
+                "color": "orange",
+                "value": 500
+              },
+              {
                 "color": "red",
-                "value": 25
+                "value": 5000
               }
             ]
           },
@@ -136,8 +146,8 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 6,
-        "x": 6,
+        "w": 5,
+        "x": 5,
         "y": 1
       },
       "id": 3,
@@ -186,7 +196,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "orange",
@@ -194,7 +205,7 @@
               },
               {
                 "color": "red",
-                "value": 10
+                "value": 50
               }
             ]
           },
@@ -204,8 +215,8 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 6,
-        "x": 12,
+        "w": 5,
+        "x": 15,
         "y": 1
       },
       "id": 4,
@@ -254,15 +265,12 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "blue"
+                "color": "green",
+                "value": null
               },
               {
-                "color": "orange",
-                "value": 3
-              },
-              {
-                "color": "red",
-                "value": 8
+                "color": "yellow",
+                "value": 1
               }
             ]
           },
@@ -272,8 +280,8 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 6,
-        "x": 18,
+        "w": 4,
+        "x": 20,
         "y": 1
       },
       "id": 5,
@@ -1900,6 +1908,75 @@
       },
       "title": "SOC Analyst Guide",
       "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "loki"
+      },
+      "description": "Alle Cowrie-Verbindungen im gewählten Zeitraum.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 1
+              },
+              {
+                "color": "red",
+                "value": 100
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 5,
+        "x": 10,
+        "y": 1
+      },
+      "id": 1012,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "ffkrjj7xqfwg0b"
+          },
+          "expr": "sum(count_over_time({job=\"cowrie\"} | json | eventid = \"cowrie.login.success\" [$__range]))",
+          "queryType": "instant",
+          "refId": "A"
+        }
+      ],
+      "title": "Erfolgreiche Honeypot-Logins",
+      "type": "stat"
     }
   ],
   "refresh": "30s",
@@ -1941,6 +2018,6 @@
   "timezone": "browser",
   "title": "IT / Cowrie SOC Command Center",
   "uid": "cowrie-soc-command-center",
-  "version": 10,
+  "version": 11,
   "weekStart": ""
 }
