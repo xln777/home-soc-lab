@@ -554,7 +554,7 @@
             "type": "loki",
             "uid": "loki"
           },
-          "expr": "sum by (geoip_location_latitude, geoip_location_longitude, geoip_country_name, geoip_city_name) (count_over_time({job=\"cowrie\", geoip_location_latitude=~\".+\", geoip_location_longitude=~\".+\"} | json | eventid =~ \"cowrie.session.connect|cowrie.login.*\" [$__range]))",
+          "expr": "sum by (geoip_location_latitude, geoip_location_longitude, geoip_country_name, geoip_city_name, src_ip) (count_over_time({job=\"cowrie\", geoip_location_latitude=~\".+\", geoip_location_longitude=~\".+\"} | json | eventid =~ \"cowrie.session.connect|cowrie.login.*\" [$__range]))",
           "queryType": "instant",
           "refId": "A"
         }
@@ -1002,7 +1002,7 @@
             "type": "loki",
             "uid": "loki"
           },
-          "expr": "topk(15, sum by (password) (count_over_time({job=\"cowrie\"} | json password=\"password\", eventid=\"eventid\" | password != \"\" | eventid =~ \"cowrie.login.(failed|success)\" [$__range])))",
+          "expr": "topk(15, sum by (password) (count_over_time({job=\"cowrie\"} | json | password != \"\" | eventid =~ \"cowrie.login.(failed|success)\" [$__range])))",
           "legendFormat": "{{password}}",
           "queryType": "instant",
           "refId": "A"
@@ -1320,7 +1320,7 @@
             "type": "loki",
             "uid": "loki"
           },
-          "expr": "sum(count_over_time({job=\"crowdsec\"}[$__range]))",
+          "expr": "sum(count_over_time({job=\"system\", filename=\"/var/log/crowdsec_api.log\"}[$__range]))",
           "queryType": "instant",
           "refId": "A"
         }
@@ -1388,7 +1388,7 @@
             "type": "loki",
             "uid": "loki"
           },
-          "expr": "sum(count_over_time({job=\"crowdsec-bouncer\"}[$__range]))",
+          "expr": "sum(count_over_time({job=\"system\", filename=\"/var/log/crowdsec_api.log\"}[$__range]))",
           "queryType": "instant",
           "refId": "A"
         }
@@ -1615,7 +1615,7 @@
             "type": "loki",
             "uid": "loki"
           },
-          "expr": "sum(count_over_time({job=\"crowdsec\"}[$__interval]))",
+          "expr": "sum(count_over_time({job=\"system\", filename=\"/var/log/crowdsec_api.log\"}[$__interval]))",
           "legendFormat": "CrowdSec service",
           "queryType": "range",
           "refId": "A"
@@ -1625,7 +1625,7 @@
             "type": "loki",
             "uid": "loki"
           },
-          "expr": "sum(count_over_time({job=\"crowdsec-bouncer\"}[$__interval]))",
+          "expr": "sum(count_over_time({job=\"system\", filename=\"/var/log/crowdsec_api.log\"}[$__interval]))",
           "legendFormat": "Firewall bouncer",
           "queryType": "range",
           "refId": "B"
@@ -1673,7 +1673,7 @@
             "type": "loki",
             "uid": "loki"
           },
-          "expr": "{job=\"crowdsec\"}",
+          "expr": "{job=\"system\", filename=\"/var/log/crowdsec_api.log\"}",
           "queryType": "range",
           "refId": "A"
         }
@@ -1710,7 +1710,7 @@
             "type": "loki",
             "uid": "loki"
           },
-          "expr": "{job=\"crowdsec-bouncer\"}",
+          "expr": "{job=\"system\", filename=\"/var/log/crowdsec_api.log\"}",
           "queryType": "range",
           "refId": "A"
         }
@@ -2250,6 +2250,6 @@
   "timezone": "browser",
   "title": "IT / Cowrie SOC Command Center",
   "uid": "cowrie-soc-command-center",
-  "version": 7,
+  "version": 9,
   "weekStart": ""
 }
