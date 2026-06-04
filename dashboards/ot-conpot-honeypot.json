@@ -525,6 +525,18 @@
       },
       "fieldConfig": {
         "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
           "unit": "short"
         },
         "overrides": []
@@ -537,15 +549,8 @@
       },
       "id": 11,
       "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "right",
-          "showLegend": true,
-          "values": [
-            "value"
-          ]
-        },
-        "pieType": "donut",
+        "displayMode": "gradient",
+        "orientation": "horizontal",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -553,9 +558,8 @@
           "fields": "",
           "values": false
         },
-        "tooltip": {
-          "mode": "single"
-        }
+        "showUnfilled": true,
+        "valueMode": "color"
       },
       "targets": [
         {
@@ -600,7 +604,7 @@
         }
       ],
       "title": "Protokoll-Verteilung",
-      "type": "piechart"
+      "type": "bargauge"
     }
   ],
   "refresh": "1m",
@@ -620,5 +624,5 @@
   "timezone": "browser",
   "title": "OT / Conpot Honeypot",
   "uid": "ot-conpot-honeypot",
-  "version": 2
+  "version": 3
 }
