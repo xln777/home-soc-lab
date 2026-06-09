@@ -32,7 +32,7 @@ def parse_args():
     default_conpot_log = os.environ.get('CONPOT_LOG_PATH') or str(Path.home() / 'conpot/logs/conpot.log')
     p.add_argument('--log', default=default_log)
     p.add_argument('--conpot-log', default=default_conpot_log)
-    p.add_argument('--no-conpot', action='store_true', help='Conpot/OT-Abschnitt nicht erzeugen')
+    p.add_argument('--with-conpot', action='store_true', help='Conpot/OT-Abschnitt einbinden (standardmäßig deaktiviert)')
     p.add_argument('--hours', type=int, default=24, help='Zeitraum rückwärts in Stunden')
     p.add_argument('-o', '--output', default=None)
     p.add_argument('--include-own', action='store_true', help='Eigene IPs NICHT filtern (nur für lokale Tests)')
@@ -331,7 +331,7 @@ def main():
     conpot_events = None
     conpot_skipped_own = 0
     conpot_skipped_internal = 0
-    if not args.no_conpot:
+    if args.with_conpot:
         conpot_events, conpot_skipped_own, conpot_skipped_internal = load_conpot_events(
             Path(args.conpot_log),
             since,

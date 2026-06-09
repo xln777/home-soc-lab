@@ -137,7 +137,7 @@ Funktionstest:
 
 ```bash
 python3 scripts/enrich.py 193.32.162.34
-python3 scripts/cowrie-daily-report.py --log ~/cowrie/logs/cowrie.json --conpot-log ~/conpot/logs/conpot.log
+python3 scripts/cowrie-daily-report.py --log ~/cowrie/logs/cowrie.json
 ```
 
 ## 6. Cron-Jobs
@@ -151,7 +151,7 @@ Beispiel:
 
 ```cron
 # Cowrie-Tagesbericht 06:30
-30 6 * * * python3 ~/home-soc-lab/scripts/cowrie-daily-report.py --log ~/cowrie/logs/cowrie.json --conpot-log ~/conpot/logs/conpot.log -o ~/home-soc-lab/reports/$(date +\%Y-\%m-\%d).md >> ~/logs/report.log 2>&1
+30 6 * * * python3 ~/home-soc-lab/scripts/cowrie-daily-report.py --log ~/cowrie/logs/cowrie.json -o ~/home-soc-lab/reports/$(date +\%Y-\%m-\%d).md >> ~/logs/report.log 2>&1
 
 # AbuseIPDB-Reporting 07:00
 0 7 * * * python3 ~/home-soc-lab/scripts/abuseipdb-reporter.py --log ~/cowrie/logs/cowrie.json >> ~/logs/abuseipdb.log 2>&1
@@ -216,7 +216,7 @@ restic init
 
 ```bash
 tail -f ~/cowrie/logs/cowrie.json
-python3 ~/home-soc-lab/scripts/cowrie-daily-report.py --hours 24 --conpot-log ~/conpot/logs/conpot.log -o /tmp/test-report.md
+python3 ~/home-soc-lab/scripts/cowrie-daily-report.py --hours 24 -o /tmp/test-report.md
 python3 ~/home-soc-lab/scripts/enrich.py 193.32.162.34
 python3 ~/home-soc-lab/scripts/abuseipdb-reporter.py --dry-run
 crontab -l
