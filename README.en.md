@@ -13,6 +13,7 @@ I run an SSH honeypot, collect the logs and analyze them with Python scripts. Th
 | Component | Purpose |
 |-----------|---------|
 | Cowrie SSH honeypot | collects real SSH scan and login attempts |
+| Suricata NIDS | passive network sensor — detects attack patterns in traffic |
 | Grafana, Loki, Promtail | log aggregation and dashboards |
 | CrowdSec | automated decisions against suspicious IPs |
 | AbuseIPDB reporting | daily reporting of new attacker IPs |
@@ -33,9 +34,11 @@ I run an SSH honeypot, collect the logs and analyze them with Python scripts. Th
 
 ```text
 Internet scanners
-  -> Cowrie SSH honeypot
+  -> Cowrie SSH honeypot  (port 2222 – interactive)
+  -> Suricata NIDS        (passive – all ports)
   -> JSON logs
-  -> Python reports
+  -> Promtail → Loki
+  -> Python reports + Grafana dashboards
   -> threat-intelligence enrichment
   -> reports and case studies
 ```

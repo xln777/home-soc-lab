@@ -38,6 +38,37 @@ python3 ~/home-soc-lab/scripts/cowrie-daily-report.py \
   -o /tmp/report-2026-05-15.md
 ```
 
+## Suricata NIDS
+
+```bash
+# Läuft Suricata?
+systemctl status suricata
+
+# Live-Alerts ansehen
+tail -f /var/log/suricata/eve.json | jq 'select(.event_type=="alert")'
+
+# Nur kritische Alerts (Severity 1)
+tail -f /var/log/suricata/eve.json | jq 'select(.event_type=="alert" and .alert.severity==1)'
+
+# Top Quell-IPs aus den letzten Alerts
+jq -r 'select(.event_type=="alert") | .src_ip' /var/log/suricata/eve.json | sort | uniq -c | sort -rn | head -20
+
+# Top Signaturen
+jq -r 'select(.event_type=="alert") | .alert.signature' /var/log/suricata/eve.json | sort | uniq -c | sort -rn | head -20
+
+# Regeln aktualisieren und neu laden
+suricata-update && systemctl reload suricata
+
+# Konfiguration testen (ohne Neustart)
+suricata -T -c /etc/suricata/suricata.yaml
+
+# Suricata neu starten
+systemctl restart suricata
+
+# Logs der letzten Stunde (Systemd)
+journalctl -u suricata --since "1 hour ago"
+```
+
 ## IP-Anreicherung
 
 ```bash

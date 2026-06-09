@@ -140,7 +140,33 @@ python3 scripts/enrich.py 193.32.162.34
 python3 scripts/cowrie-daily-report.py --log ~/cowrie/logs/cowrie.json
 ```
 
-## 6. Cron-Jobs
+## 6. Suricata NIDS
+
+```bash
+# Installationsscript ausführen (als root)
+sudo bash ~/home-soc-lab/scripts/setup-suricata.sh
+```
+
+Das Script erkennt das Netzwerk-Interface und die öffentliche IP automatisch,
+installiert Suricata, konfiguriert das EVE-JSON-Log und gibt einen
+Promtail-Snippet aus, der in `~/monitoring/promtail.yml` eingetragen werden muss.
+
+Danach Promtail neu starten:
+
+```bash
+cd ~/monitoring && docker compose restart promtail
+```
+
+Grafana-Dashboard importieren: `dashboards/suricata-nids.json` in Grafana
+unter Dashboards → Import → JSON hochladen.
+
+Wöchentlicher Regel-Update per Cron (empfohlen):
+
+```cron
+0 3 * * 1 suricata-update && systemctl reload suricata >> ~/logs/suricata-update.log 2>&1
+```
+
+## 7. Cron-Jobs
 
 ```bash
 mkdir -p ~/logs
@@ -160,7 +186,7 @@ Beispiel:
 15 7 * * * ~/bin/soc-lab-autocommit.sh >> ~/logs/autocommit.log 2>&1
 ```
 
-## 7. Git-Auto-Commit-Script
+## 8. Git-Auto-Commit-Script
 
 ```bash
 mkdir -p ~/bin
@@ -186,7 +212,7 @@ chmod +x ~/bin/soc-lab-autocommit.sh
 
 Empfehlung: Für den Server einen eigenen GitHub-Deploy-Key oder einen separaten SSH-Key mit minimalen Rechten verwenden.
 
-## 8. Restic-Backup
+## 9. Restic-Backup
 
 Optional, aber empfohlen:
 
@@ -212,7 +238,7 @@ source ~/.secrets
 restic init
 ```
 
-## 9. Verifikation
+## 10. Verifikation
 
 ```bash
 tail -f ~/cowrie/logs/cowrie.json

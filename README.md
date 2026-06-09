@@ -15,6 +15,7 @@ Ich betreibe einen SSH-Honeypot, sammle die Logs zentral und werte sie mit eigen
 | Komponente | Zweck |
 |------------|-------|
 | Cowrie SSH-Honeypot | sammelt reale SSH-Scan- und Login-Versuche |
+| Suricata NIDS | passiver Netzwerksensor – erkennt Angriffspatterns im Traffic |
 | Grafana, Loki, Promtail | Log-Aggregation und Dashboarding |
 | CrowdSec | automatische Entscheidungen gegen auffällige IPs |
 | AbuseIPDB-Reporting | tägliches Melden neuer Angreifer-IPs |
@@ -35,9 +36,11 @@ Ich betreibe einen SSH-Honeypot, sammle die Logs zentral und werte sie mit eigen
 
 ```text
 Internet-Scanner
-  -> Cowrie SSH-Honeypot
+  -> Cowrie SSH-Honeypot  (Port 2222 – interaktiv)
+  -> Suricata NIDS        (passiv – alle Ports)
   -> JSON-Logs
-  -> Python-Reports
+  -> Promtail → Loki
+  -> Python-Reports + Grafana-Dashboards
   -> Threat-Intel-Anreicherung
   -> Reports und Case Studies
 ```
