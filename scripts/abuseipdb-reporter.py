@@ -149,10 +149,16 @@ def main():
         print(f"FEHLER: {log_path} nicht gefunden")
         return
 
-    since = datetime.now(timezone.utc) - timedelta(hours=args.hours)
+    now_utc = datetime.now(timezone.utc)
+    since = now_utc - timedelta(hours=args.hours)
     cache = load_cache()
     own_nets = load_own_networks()
-    today = datetime.now().strftime("%Y-%m-%d")
+    # UTC wie die Log-Timestamps, sonst kippt der Tages-Key um Mitternacht
+    today = now_utc.strftime("%Y-%m-%d")
+
+    # Cache-Eintraege aelter als 7 Tage entfernen, sonst waechst die Datei ewig
+    cutoff = (now_utc - timedelta(days=7)).strftime("%Y-%m-%d")
+    cache = {k: v for k, v in cache.items() if k.split(":", 1)[0] >= cutoff}
 
     # IPs aus Cowrie-Log sammeln
     ip_attempts = {}
@@ -184,9 +190,11 @@ def main():
             if is_own_ip(ip, own_nets):
                 continue
 
+            # Nur Usernames sammeln: AbuseIPDB-Kommentare sind oeffentlich,
+            # Passwoerter (z.B. Tippfehler echter Nutzer) gehoeren da nicht rein
             if ip not in ip_attempts:
                 ip_attempts[ip] = []
-            ip_attempts[ip].append(f"{ev.get('username','?')}/{ev.get('password','?')}")
+            ip_attempts[ip].append(ev.get("username", "?"))
 
     print(f"==> AbuseIPDB Reporter — letzte {args.hours}h")
     print(f"    {len(ip_attempts)} einzigartige Angreifer-IPs gefunden")
@@ -203,16 +211,17 @@ def main():
             skipped += 1
             continue
 
+        sample_users = sorted(set(attempts))[:3]
         comment = (
             f"SSH brute-force via Cowrie honeypot. "
             f"{len(attempts)} attempts. "
-            f"Sample credentials: {', '.join(attempts[:3])}"
+            f"Sample usernames: {', '.join(sample_users)}"
         )
 
         success = report_ip(ip, comment, dry_run=args.dry_run)
 
         if success and not args.dry_run:
-            cache[cache_key] = datetime.now().isoformat()
+            cache[cache_key] = datetime.now(timezone.utc).isoformat()
             reported += 1
             time.sleep(0.5)  # Rate-Limit respektieren
         elif success:

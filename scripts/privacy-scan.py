@@ -16,7 +16,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 OWN_IPS_FILE = ROOT / "scripts" / "own-ips.txt"
-PUBLIC_SUFFIXES = {".md", ".json", ".csv", ".txt", ".yml", ".yaml"}
+PUBLIC_SUFFIXES = {".md", ".json", ".csv", ".txt", ".yml", ".yaml", ".py"}
 SKIP_DIRS = {".git", "__pycache__"}
 
 
@@ -58,20 +58,31 @@ def public_files():
 def main():
     patterns = load_patterns()
     if not patterns:
+        # Bei push-Events im CI ist ein leeres Pattern-Set ein Fehler:
+        # sonst laeuft der Gate still gruen durch, wenn das Secret fehlt
+        # oder umbenannt wurde. Fork-PRs bekommen keine Secrets — dort
+        # bleibt der Scan bewusst ein No-Op statt hart zu blocken.
+        if os.environ.get("GITHUB_EVENT_NAME") == "push":
+            print("privacy-scan: FEHLER — keine Pattern geladen "
+                  "(PRIVACY_SCAN_PATTERNS-Secret fehlt oder ist leer)")
+            return 1
         print("privacy-scan: keine eigenen IPs oder CI-Pattern konfiguriert")
         return 0
 
+    # Fundstellen nur als Datei:Zeile ausgeben, nie den Wert selbst:
+    # CI-Logs eines Public-Repos sind oeffentlich, und GitHubs
+    # Secret-Maskierung greift nicht fuer Teil-Werte.
     findings = []
     for path in public_files():
-        text = path.read_text(errors="ignore")
-        for pattern in patterns:
-            if pattern in text:
-                findings.append((path.relative_to(ROOT), pattern))
+        lines = path.read_text(errors="ignore").splitlines()
+        for lineno, line in enumerate(lines, start=1):
+            if any(pattern in line for pattern in patterns):
+                findings.append((path.relative_to(ROOT), lineno))
 
     if findings:
         print("privacy-scan: sensible Werte in öffentlichen Dateien gefunden:")
-        for rel_path, pattern in findings:
-            print(f"  {rel_path}: {pattern}")
+        for rel_path, lineno in findings:
+            print(f"  {rel_path}:{lineno}")
         return 1
 
     print("privacy-scan: ok")

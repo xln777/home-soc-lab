@@ -26,6 +26,7 @@ API-Keys via Environment-Variablen (z.B. in ~/.secrets):
 """
 
 import argparse
+import ipaddress
 import json
 import os
 import subprocess
@@ -35,6 +36,14 @@ import urllib.request
 import urllib.error
 
 TIMEOUT = 10
+
+
+def valid_ip(value):
+    """argparse-Type: nur echte IP-Adressen in die Request-URLs lassen."""
+    try:
+        return str(ipaddress.ip_address(value))
+    except ValueError:
+        raise argparse.ArgumentTypeError(f"keine gültige IP-Adresse: {value}")
 
 
 def load_secrets_file():
@@ -96,7 +105,11 @@ def lookup_abuseipdb(ip):
 
 
 def lookup_ipapi(ip):
-    data = http_get('http://ip-api.com/json/' + ip + '?fields=66846719')
+    # ip-api.com serviert HTTPS nur im kostenpflichtigen Tarif. Die Abfrage
+    # laeuft daher unverschluesselt — wer welche IP nachschlaegt, ist auf dem
+    # Transportweg mitlesbar. Mit IPAPI_BASE_URL auf den Pro-Endpoint zeigen.
+    base = os.environ.get('IPAPI_BASE_URL', 'http://ip-api.com/json/')
+    data = http_get(base + ip + '?fields=66846719')
     if '_error' in data or data.get('status') != 'success':
         return {'_error': data.get('message', data.get('_error', 'unknown'))}
     return {
@@ -282,7 +295,7 @@ def render_markdown(ip, results):
 
 def main():
     p = argparse.ArgumentParser(description='IP threat-intelligence enrichment.')
-    p.add_argument('ip', help='IP address to enrich')
+    p.add_argument('ip', type=valid_ip, help='IP address to enrich')
     p.add_argument('--json', action='store_true', help='raw JSON output')
     args = p.parse_args()
 
